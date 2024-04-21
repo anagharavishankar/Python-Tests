@@ -4,7 +4,7 @@ class Node:
         self.next = next
 
 
-class LinkedList:
+class LinkedList(Exception):
     def __init__(self):
         self.head = None
 
@@ -86,14 +86,61 @@ class LinkedList:
         for data in data_list:
             self.insert_at_end(data)
 
+    def insert_after_value(self, data_after, data_to_insert):
+        itr = self.head
+
+        while itr:
+            if itr.data == data_after:
+                node = Node(data_to_insert, itr.next)
+                itr.next = node
+                return
+            itr = itr.next
+
+        print("Unable to locate the asked data in the Linked List")
+
+    def remove_by_value(self, data):
+        itr = self.head
+        # if data at node 1
+        if itr.data == data:
+            self.head = itr.next
+            itr.next = None
+            return
+
+        prev = None
+        while itr:
+            if itr.data == data:
+                prev.next = itr.next
+                return
+            prev = itr
+            itr = itr.next
+
+        print("Unable to locate the asked data in the Linked List")
+
 
 if __name__ == '__main__':
     ll = LinkedList()
     ll.insert_values(["banana", "mango", "grapes", "orange"])
+    ll.print()
+
     ll.insert_at(1, "blueberry")
+    ll.print()
+
     ll.remove_at(2)
     ll.print()
 
     ll.insert_values([45, 7, 12, 567, 99])
+    ll.print()
+
     ll.insert_at_end(67)
+    ll.print()
+
+    ll.insert_after_value(567, 11)
+    ll.insert_after_value(67, "end")
+    ll.print()
+
+    ll.remove_by_value(45)
+    ll.print()
+    ll.remove_by_value("end")
+    ll.print()
+    ll.remove_by_value(11)
     ll.print()
